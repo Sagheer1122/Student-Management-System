@@ -1,0 +1,61 @@
+<div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center bg-light">
+  <div class="row w-100 justify-content-center">
+    <div class="col-md-4 col-sm-8">
+      <div class="card border-0 shadow-lg rounded-4">
+        <div class="card-body p-4">        
+              <%= render "devise/shared/error_messages", resource: resource %>
+          <h3 class="text-center fw-bold mb-1">Welcome Back </h3>
+          <p class="text-center text-muted mb-4">
+            Please login to your account
+          </p>
+          <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+
+            <div class="mb-3">
+              <%= f.label :email, class: "form-label small fw-semibold" %>
+              <div class="input-group">
+                <span class="input-group-text bg-white">
+                  <i class="bi bi-envelope"></i>
+                </span>
+                <%= f.email_field :email,
+                      autofocus: true,
+                      autocomplete: "email",
+                      class: "form-control",
+                      placeholder: "example@email.com" %>
+              </div>
+            </div>
+            <div class="mb-3">
+              <%= f.label :password, class: "form-label small fw-semibold" %>
+              <div class="input-group">
+                <span class="input-group-text bg-white">
+                  <i class="bi bi-lock"></i>
+                </span>
+                <%= f.password_field :password,
+                      autocomplete: "current-password",
+                      class: "form-control",
+                      placeholder: "••••••••" %>
+              </div>
+            </div>
+            <% if devise_mapping.rememberable? %>
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="form-check">
+                  <%= f.check_box :remember_me, class: "form-check-input" %>
+                  <%= f.label :remember_me, class: "form-check-label small" %>
+                </div>
+              </div>
+            <% end %>
+
+            <div class="d-grid mb-3">
+              <%= f.submit "Log in",
+                    class: "btn btn-primary rounded-pill py-2 fw-semibold" %>
+            </div>
+
+          <% end %>
+
+          <div class="text-center small">
+            <%= render "devise/shared/links" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

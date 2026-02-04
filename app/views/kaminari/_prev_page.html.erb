@@ -1,0 +1,14 @@
+
+<% if current_page.first? %>
+  <li class="page-item disabled">
+    <span class="page-link rounded-pill px-4 border shadow-sm fw-semibold text-muted bg-light">
+      <i class="bi bi-arrow-left me-2"></i>Previous
+    </span>
+  </li>
+<% else %>
+  <li class="page-item">
+    <%= link_to url, class: 'page-link rounded-pill px-4 border shadow-sm fw-semibold text-primary', rel: 'prev', remote: remote do %>
+      <i class="bi bi-arrow-left me-2"></i>Previous
+    <% end %>
+  </li>
+<% end %>

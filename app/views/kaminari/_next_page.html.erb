@@ -1,0 +1,14 @@
+
+<% if current_page.last? %>
+  <li class="page-item disabled">
+    <span class="page-link rounded-pill px-4 border shadow-sm fw-semibold text-muted bg-light">
+      Next<i class="bi bi-arrow-right ms-2"></i>
+    </span>
+  </li>
+<% else %>
+  <li class="page-item">
+    <%= link_to url, class: 'page-link rounded-pill px-4 border shadow-sm fw-semibold text-primary', rel: 'next', remote: remote do %>
+      Next<i class="bi bi-arrow-right ms-2"></i>
+    <% end %>
+  </li>
+<% end %>

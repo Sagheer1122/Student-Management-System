@@ -1,0 +1,176 @@
+<div class="container py-4">
+  <div class="d-flex align-items-center justify-content-between mb-4">
+    <div>
+        <h2 class="fw-bold text-dark mb-1">My Profile</h2>
+        <p class="text-muted mb-0">Welcome, <%= @student&.name || @user.username %></p>
+    </div>
+    <div class="d-flex gap-2">
+        <%= link_to edit_profile_path, class: "btn btn-primary px-4 fw-semibold shadow-sm" do %>
+           <i class="bi bi-pencil-square me-2"></i>Edit Profile
+        <% end %>
+        <%= link_to edit_user_registration_path, class: "btn btn-light border px-4 fw-semibold text-secondary shadow-sm" do %>
+           <i class="bi bi-key me-2"></i>Change Password
+        <% end %>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-md-4 col-lg-3">
+       <div class="card border-0 shadow-sm rounded-3 text-center p-4 bg-white h-100">
+           <div class="mb-3 mx-auto">
+               <div class="default-avatar-large bg-light rounded-2 d-flex align-items-center justify-content-center mx-auto mb-3" style="width: 100%; aspect-ratio: 1/1; max-width: 250px;">
+                   <i class="bi bi-person-fill text-secondary" style="font-size: 8rem;"></i>
+               </div>
+           </div>
+           
+           <h4 class="fw-bold text-dark mb-1"><%= @student&.name || @user.username %></h4>
+           <div class="d-flex justify-content-center gap-2 mt-2">
+             <% if @student %>
+               <span class="badge rounded-pill <%= @student.status == 'Active' ? 'bg-success' : 'bg-secondary' %> bg-opacity-75 px-3 py-2 fw-semibold">
+                 <%= @student.status || "Status Unknown" %>
+               </span>
+             <% end %>
+             <span class="badge bg-light text-primary border border-primary-subtle px-3 py-2 rounded-pill fw-semibold">
+               <%= @user.admin? ? "Administrator" : "Student" %>
+             </span>
+           </div>
+           
+           <% if @student&.student_id.present? %>
+            <p class="text-muted mt-3 mb-0 fw-medium">ID: <%= @student.student_id %></p>
+           <% end %>
+       </div>
+    </div>
+    <div class="col-md-8 col-lg-9">
+       <% if @user.admin? %>
+        <div class="row g-3">
+          <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-3 p-4 h-100 bg-primary bg-opacity-10">
+              <div class="d-flex align-items-center mb-2">
+                  <div class="icon-square bg-white text-primary rounded-3 p-2 me-3 shadow-sm">
+                      <i class="bi bi-people-fill fs-4"></i>
+                  </div>
+                  <h6 class="text-uppercase text-muted fw-bold mb-0 letter-spacing-1">Total Users</h6>
+              </div>
+              <h2 class="display-6 fw-bold text-dark mb-0"><%= @total_users %></h2>
+              <p class="text-muted small mb-0 mt-2">Registered accounts</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-3 p-4 h-100 bg-info bg-opacity-10">
+               <div class="d-flex align-items-center mb-2">
+                  <div class="icon-square bg-white text-info rounded-3 p-2 me-3 shadow-sm">
+                      <i class="bi bi-mortarboard-fill fs-4"></i>
+                  </div>
+                  <h6 class="text-uppercase text-muted fw-bold mb-0 letter-spacing-1">Total Students</h6>
+              </div>
+              <h2 class="display-6 fw-bold text-dark mb-0"><%= @total_students %></h2>
+              <p class="text-muted small mb-0 mt-2">Enrolled students</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-3 p-4 h-100 bg-success bg-opacity-10">
+               <div class="d-flex align-items-center mb-2">
+                  <div class="icon-square bg-white text-success rounded-3 p-2 me-3 shadow-sm">
+                      <i class="bi bi-person-check-fill fs-4"></i>
+                  </div>
+                  <h6 class="text-uppercase text-muted fw-bold mb-0 letter-spacing-1">Active Students</h6>
+              </div>
+              <h2 class="display-6 fw-bold text-dark mb-0"><%= @active_students %></h2>
+               <p class="text-muted small mb-0 mt-2">Currently active status</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card border-0 shadow-sm rounded-3 p-4 h-100 bg-danger bg-opacity-10">
+              <div class="d-flex align-items-center mb-2">
+                  <div class="icon-square bg-white text-danger rounded-3 p-2 me-3 shadow-sm">
+                      <i class="bi bi-person-x-fill fs-4"></i>
+                  </div>
+                  <h6 class="text-uppercase text-muted fw-bold mb-0 letter-spacing-1">Inactive Students</h6>
+              </div>
+              <h2 class="display-6 fw-bold text-dark mb-0"><%= @inactive_students %></h2>
+              <p class="text-muted small mb-0 mt-2">Needs attention</p>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="card border-0 shadow-sm rounded-3 p-4 h-100 bg-warning bg-opacity-10">
+              <div class="d-flex align-items-center mb-2">
+                  <div class="icon-square bg-white text-warning rounded-3 p-2 me-3 shadow-sm">
+                      <i class="bi bi-award-fill fs-4"></i>
+                  </div>
+                  <h6 class="text-uppercase text-muted fw-bold mb-0 letter-spacing-1">Graduated Students</h6>
+              </div>
+              <h2 class="display-6 fw-bold text-dark mb-0"><%= @graduated_students %></h2>
+              <p class="text-muted small mb-0 mt-2">Graduated records</p>
+            </div>
+          </div>
+        </div>
+
+       <% else %>
+       <div class="card border-0 shadow-sm rounded-3 bg-white h-100">
+          <div class="card-body p-4">
+             <div class="profile-details-list">
+                 <% if @student %>
+                    
+                    <div class="d-flex border-bottom py-3 align-items-center">
+                        <div class="text-end pe-4 text-dark fw-bold" style="min-width: 160px; width: 30%;">Full Name</div>
+                        <div class="text-secondary flex-grow-1 ps-2 border-start"><%= @student.name %></div>
+                    </div>
+
+                    <div class="d-flex border-bottom py-3 align-items-center">
+                        <div class="text-end pe-4 text-dark fw-bold" style="min-width: 160px; width: 30%;">Email Address</div>
+                        <div class="text-secondary flex-grow-1 ps-2 border-start"><%= @student.email %></div>
+                    </div>
+                  
+                    <div class="d-flex border-bottom py-3 align-items-center">
+                        <div class="text-end pe-4 text-dark fw-bold" style="min-width: 160px; width: 30%;">Class / Grade</div>
+                        <div class="text-secondary flex-grow-1 ps-2 border-start"><%= @student.class_name %></div>
+                    </div>
+
+                    <div class="d-flex border-bottom py-3 align-items-center">
+                        <div class="text-end pe-4 text-dark fw-bold" style="min-width: 160px; width: 30%;">Roll Number</div>
+                        <div class="text-secondary flex-grow-1 ps-2 border-start"><%= @student.roll_number %></div>
+                    </div>
+
+                    <div class="d-flex border-bottom py-3 align-items-center">
+                        <div class="text-end pe-4 text-dark fw-bold" style="min-width: 160px; width: 30%;">Enrollment Date</div>
+                        <div class="text-secondary flex-grow-1 ps-2 border-start"><%= @student.enrollment_date %></div>
+                    </div>
+                    
+                    <div class="d-flex py-3 align-items-center">
+                        <div class="text-end pe-4 text-dark fw-bold" style="min-width: 160px; width: 30%;">Last Updated</div>
+                        <div class="text-secondary flex-grow-1 ps-2 border-start"><%= @student.updated_at.strftime("%B %d, %Y") %></div>
+                    </div>
+
+                 <% else %>
+                    <% unless @user.admin? %>
+                      <div class="text-center py-5 border rounded-3 bg-light bg-opacity-50 mt-2">
+                        <div class="bg-white rounded-circle shadow-sm d-inline-flex align-items-center justify-content-center mb-3" style="width: 70px; height: 70px;">
+                           <i class="bi bi-person-plus text-primary fs-2"></i>
+                        </div>
+                        <h4 class="fw-bold text-dark mb-2">Add Your information</h4>
+                        <p class="text-muted mb-4">Please fill in the details to update the Your  record.</p>
+                        <%= link_to edit_profile_path, class: "btn btn-primary px-4 py-2 fw-semibold shadow-sm" do %>
+                           <i class="bi bi-plus-lg me-2"></i>Add Student Details
+                        <% end %>
+                      </div>
+                    <% end %>
+                    
+                    <div class="d-flex border-bottom py-3 align-items-center mt-4">
+                        <div class="text-dark fw-bold" style="min-width: 150px; width: 30%;">Username</div>
+                        <div class="text-secondary flex-grow-1"><%= @user.username %></div>
+                    </div>
+                    <div class="d-flex py-3 align-items-center">
+                        <div class="text-dark fw-bold" style="min-width: 150px; width: 30%;">Email</div>
+                        <div class="text-secondary flex-grow-1"><%= @user.email %></div>
+                    </div>
+                 <% end %>
+             </div>
+          </div>
+       </div>
+       <% end %>
+    </div>
+  </div>
+
+  
+</div>

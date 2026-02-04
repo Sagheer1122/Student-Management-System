@@ -1,0 +1,169 @@
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 pb-4">
+      
+      <div class="d-flex align-items-center mb-4">
+        <%= link_to profile_path, class: "btn btn-link text-decoration-none ps-0 text-muted" do %>
+          <i class="bi bi-arrow-left me-1"></i>Back to Profile
+        <% end %>
+      </div>
+      
+      <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        <div class="card-header bg-white border-0 pt-4 pb-0 px-4">
+          <% if @user.admin? %>
+            <h4 class="fw-bold text-dark mb-1">Update Profile</h4>
+            <p class="text-muted small">Update your Admin information below.</p>
+          <% else %>
+             <% if @user.student&.persisted? %>
+                 <h4 class="fw-bold text-dark mb-1">Student Information</h4>
+                 <p class="text-muted small">Update your student details below.</p>
+             <% else %>
+                 <h4 class="fw-bold text-dark mb-1">Add New Student</h4>
+                 <p class="text-muted small">Please fill in the details to update the student record.</p>
+             <% end %>
+          <% end %>
+        </div>
+
+        <div class="card-body p-4 pb-3">
+          <%= form_with(model: @user, url: profile_path, method: :patch, local: true) do |f| %>
+            <% if @user.errors.any? %>
+               <div class="alert alert-danger border-0 shadow-sm rounded-3">
+                <div class="d-flex">
+                  <div>
+                    <h6 class="alert-heading fw-bold mb-1"><%= pluralize(@user.errors.count, "error") %> detected:</h6>
+                    <ul class="mb-0 small">
+                      <% @user.errors.full_messages.each do |message| %>
+                        <li><%= message %></li>
+                      <% end %>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+
+            <% if @user.admin? %>
+               <div class="row g-3">
+                  <div class="col-md-12">
+                    <%= f.label :username, class: "form-label fw-semibold small text-uppercase text-muted" %>
+                    <div class="input-group">
+                      <span class="input-group-text bg-light border-end-0 text-muted"><i class="bi bi-person"></i></span>
+                      <%= f.text_field :username, class: "form-control bg-light border-start-0 ps-0", placeholder: "Enter Your Username", required: true %>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <%= f.label :email, "Email Address", class: "form-label fw-semibold small text-uppercase text-muted" %>
+                    <div class="input-group">
+                      <span class="input-group-text bg-light border-end-0 text-muted"><i class="bi bi-envelope"></i></span>
+                      <%= f.email_field :email, class: "form-control bg-light border-start-0 ps-0", placeholder: "your@email.com", required: true %>
+                    </div>
+                  </div>
+               </div>
+            <% else %>
+                <% if @user.student && @user.student.persisted? %>
+                   <%= f.fields_for :student, @user.student do |student_form| %>
+                      
+                      <% unless @user.student.persisted? %>
+                           <h5 class="fw-bold text-primary mb-3">Student Information</h5>
+                      <% end %>
+
+                      <div class="row g-3">
+                          <div class="col-md-6">
+                            <%= student_form.label :name, class: "form-label fw-semibold small text-uppercase text-muted" %>
+                            <div class="input-group">
+                              <span class="input-group-text bg-light border-end-0 text-muted"><i class="bi bi-person"></i></span>
+                              <%= student_form.text_field :name, class: "form-control bg-light border-start-0 ps-0", placeholder: "Enter Your Name" %>
+                            </div>
+                          </div>
+
+                          <div class="col-md-6">
+                            <%= student_form.label :roll_number, class: "form-label fw-semibold small text-uppercase text-muted" %>
+                            <div class="input-group">
+                              <span class="input-group-text bg-light border-end-0 text-muted"><i class="bi bi-hash"></i></span>
+                              <%= student_form.text_field :roll_number, class: "form-control bg-light border-start-0 ps-0", placeholder: "Roll No." %>
+                            </div>
+                          </div>
+
+                          <div class="col-md-12">
+                             <label class="form-label fw-semibold small text-uppercase text-muted">Email</label>
+                             <div class="input-group">
+                               <span class="input-group-text bg-light border-end-0 text-muted"><i class="bi bi-envelope"></i></span>
+                               <%= student_form.text_field :email, class: "form-control bg-light border-start-0 ps-0", placeholder: "email@school.com" %>
+                             </div>
+                          </div>
+
+                          <div class="col-md-6">
+                            <%= student_form.label :class_name, "Class", class: "form-label fw-semibold small text-uppercase text-muted" %>
+                            <%= student_form.text_field :class_name, class: "form-control bg-light", placeholder: "Section" %>
+                          </div>
+
+                          <div class="col-md-6">
+                             <%= student_form.label :status, class: "form-label fw-semibold small text-uppercase text-muted" %>
+                             <%= student_form.select :status, ["Active", "Inactive", "Graduated"], { include_blank: "Select Status" }, { class: "form-select bg-light" } %>
+                          </div>
+
+                          <div class="col-md-6">
+                            <%= student_form.label :enrollment_date, class: "form-label fw-semibold small text-uppercase text-muted" %>
+                            <%= student_form.date_field :enrollment_date, class: "form-control bg-light" %>
+                          </div>
+                      </div>
+                   <% end %>
+                <% else %>
+                   <% if @user.student %>
+                      <%= f.fields_for :student, @user.student do |student_form| %>
+                           <h5 class="fw-bold text-primary mb-3">Add New Student</h5>
+                           <div class="row g-3">
+                              <div class="col-md-6">
+                                <%= student_form.label :name, class: "form-label fw-semibold small text-uppercase text-muted" %>
+                                <div class="input-group">
+                                  <span class="input-group-text bg-light border-end-0 text-muted"><i class="bi bi-person"></i></span>
+                                  <%= student_form.text_field :name, class: "form-control bg-light border-start-0 ps-0", placeholder: "Enter Your Name" %>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <%= student_form.label :roll_number, class: "form-label fw-semibold small text-uppercase text-muted" %>
+                                  <div class="input-group">
+                                      <span class="input-group-text bg-light border-end-0 text-muted"><i class="bi bi-hash"></i></span>
+                                      <%= student_form.text_field :roll_number, class: "form-control bg-light border-start-0 ps-0", placeholder: "Roll No." %>
+                                  </div>
+                              </div>
+                               <div class="col-md-12">
+                                  <label class="form-label fw-semibold small text-uppercase text-muted">Email</label>
+                                  <div class="input-group">
+                                      <span class="input-group-text bg-light border-end-0 text-muted"><i class="bi bi-envelope"></i></span>
+                                      <%= student_form.text_field :email, class: "form-control bg-light border-start-0 ps-0", placeholder: "email@school.com" %>
+                                  </div>
+                               </div>
+                               <div class="col-md-6">
+                                  <%= student_form.label :class_name, "Class", class: "form-label fw-semibold small text-uppercase text-muted" %>
+                                  <%= student_form.text_field :class_name, class: "form-control bg-light", placeholder: "Section" %>
+                               </div>
+                               <div class="col-md-6">
+                                  <%= student_form.label :status, class: "form-label fw-semibold small text-uppercase text-muted" %>
+                                  <%= student_form.select :status, ["Active", "Inactive", "Graduated"], { include_blank: "Select Status" }, { class: "form-select bg-light" } %>
+                               </div>
+                               <div class="col-md-6">
+                                  <%= student_form.label :enrollment_date, class: "form-label fw-semibold small text-uppercase text-muted" %>
+                                  <%= student_form.date_field :enrollment_date, class: "form-control bg-light" %>
+                               </div>
+                           </div>
+                      <% end %>
+                   <% else %>
+                       <div class="alert alert-warning">
+                           No student record associated with this profile.
+                       </div>
+                   <% end %>
+                <% end %>
+            <% end %>
+
+            <div class="mt-5 d-flex align-items-center justify-content-end border-top pt-4">
+               <%= link_to "Cancel", profile_path, class: "btn btn-light px-4 me-2 rounded-3" %>
+               <%= f.submit "Save Changes", class: "btn btn-primary px-4 rounded-3 fw-bold shadow-sm" %>
+            </div>
+
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

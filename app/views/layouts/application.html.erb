@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Sms" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Sms">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload", media: "all" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <header class="modern-header">
+      <div class="header-container container-fluid d-flex align-items-center justify-content-between">
+        <%= link_to user_signed_in? && current_user.admin? ? students_path : profile_path, class: "brand-logo" do %>
+          <span class="logo-accent">S</span>MS
+        <% end %>
+        <nav class="simple-nav justify-content-start align-items-center me-auto ms-4">
+          <% if user_signed_in? && current_user.admin? %>
+            <%= link_to "Students", students_path, class: "nav-link-item #{'active' if current_page?(students_path)}" %>
+          <% end %>
+        </nav>
+
+        <div class="header-actions">
+          <% if user_signed_in? %>
+            <div class="dropdown">
+              <button class="user-pill dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                <i class="bi bi-person-circle"></i>
+                <span><%= current_user.admin? ? "Admin" : "User" %></span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><%= link_to "Profile", profile_path, class: "dropdown-item" %></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><%= button_to "Logout", destroy_user_session_path, method: :delete, class: "dropdown-item text-danger border-0 bg-transparent w-100 text-start" %></li>
+              </ul>
+            </div>
+          <% else %>
+            <div class="d-flex gap-2">
+              <%= link_to "Login", new_user_session_path, class: "btn-login" %>
+              <%= link_to "Sign Up", new_user_registration_path, class: "btn-signup" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </header>
+
+    <div class="toast-container position-fixed bottom-0 start-0 p-3" style="z-index: 1055;">
+      <% if flash.any? %>
+        <% flash.each do |type, message| %>
+          <div class="toast align-items-center text-white bg-<%= type == 'notice' ? 'success' : type == 'alert' ? 'danger' : 'info' %> border-0 fade show"
+               role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
+            <div class="d-flex">
+              <div class="toast-body">
+                <i class="bi <%= type == 'notice' ? 'bi-check-circle-fill' : type == 'alert' ? 'bi-exclamation-triangle-fill' : 'bi-info-circle-fill' %> me-2"></i>
+                <%= message %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+
+    <%= yield %>
+    <footer class="footer-custom mt-auto py-4">
+      <div class="container text-center">
+        <p class="mb-1">&copy; <%= Time.current.year %> Student Management System. All rights Reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>
