@@ -1,8 +1,17 @@
 
 <%= paginator.render do -%>
   <nav aria-label="Page navigation" class="mt-4">
-    <ul class="pagination justify-content-center gap-3">
-      <%= prev_page_tag %> 
+    <ul class="pagination justify-content-center align-items-center gap-2">
+      <%= prev_page_tag %>
+      
+      <% each_page do |page| -%>
+        <% if page.display_tag? -%>
+          <%= page_tag page %>
+        <% elsif !page.was_truncated? -%>
+          <%= gap_tag %>
+        <% end -%>
+      <% end -%>
+
       <%= next_page_tag %>
     </ul>
   </nav>

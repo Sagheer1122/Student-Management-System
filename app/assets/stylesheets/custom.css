@@ -249,6 +249,7 @@ body {
     transform: translateX(5px);
     background-color: #edf2f7;
 }
+
 .toast-container {
     z-index: 1055;
 }
@@ -279,38 +280,48 @@ body {
 
 .search-sidebar .form-control-sm,
 .search-sidebar .form-select-sm {
-  font-size: 0.875rem;
+    font-size: 0.875rem;
 }
 
-  .custom-pagination .pagination {
+.custom-pagination .pagination {
     margin-bottom: 0;
     gap: 0.35rem;
-  }
-  .custom-pagination .page-item .page-link {
+}
+
+.custom-pagination .page-item .page-link {
     border: none;
     border-radius: 0.6rem !important;
     color: #6c757d;
-    padding: 0.5rem 0.9rem;
+    padding: 0.25rem 0.6rem;
+    font-size: 0.8rem;
     font-weight: 600;
     background: #fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     transition: all 0.2s;
-  }
-  .custom-pagination .page-item.active .page-link {
+    min-width: 32px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.custom-pagination .page-item.active .page-link {
     background: #0d6efd !important;
     color: #fff !important;
     box-shadow: 0 4px 12px rgba(13, 110, 253, 0.25);
-  }
-  .custom-pagination .page-item.disabled .page-link {
+}
+
+.custom-pagination .page-item.disabled .page-link {
     background: #f8f9fa;
     color: #ced4da;
     opacity: 0.7;
-  }
-  .custom-pagination .page-item .page-link:hover:not(.active) {
+}
+
+.custom-pagination .page-item .page-link:hover:not(.active) {
     background: #f0f4f8;
     color: #0d6efd;
     transform: translateY(-1px);
-  }
+}
 
 .bg-gradient-premium {
     background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
@@ -327,7 +338,7 @@ body {
     align-items: center;
     justify-content: center;
     border: 4px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 .profile-detail-box {
@@ -340,7 +351,7 @@ body {
     background-color: #fff;
     border-color: #dee2e6;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .tracking-wider {
