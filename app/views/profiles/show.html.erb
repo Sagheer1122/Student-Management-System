@@ -43,19 +43,7 @@
     <div class="col-md-8 col-lg-9">
        <% if @user.admin? %>
         <div class="row g-3">
-          <div class="col-md-4">
-            <div class="card border-0 shadow-sm rounded-3 p-4 h-100 bg-primary bg-opacity-10">
-              <div class="d-flex align-items-center mb-2">
-                  <div class="icon-square bg-white text-primary rounded-3 p-2 me-3 shadow-sm">
-                      <i class="bi bi-people-fill fs-4"></i>
-                  </div>
-                  <h6 class="text-uppercase text-muted fw-bold mb-0 letter-spacing-1">Total Users</h6>
-              </div>
-              <h2 class="display-6 fw-bold text-dark mb-0"><%= @total_users %></h2>
-              <p class="text-muted small mb-0 mt-2">Registered accounts</p>
-            </div>
-          </div>
-          <div class="col-md-4">
+          <div class="col-md-5">
             <div class="card border-0 shadow-sm rounded-3 p-4 h-100 bg-info bg-opacity-10">
                <div class="d-flex align-items-center mb-2">
                   <div class="icon-square bg-white text-info rounded-3 p-2 me-3 shadow-sm">
@@ -67,7 +55,7 @@
               <p class="text-muted small mb-0 mt-2">Enrolled students</p>
             </div>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-6">
             <div class="card border-0 shadow-sm rounded-3 p-4 h-100 bg-success bg-opacity-10">
                <div class="d-flex align-items-center mb-2">
                   <div class="icon-square bg-white text-success rounded-3 p-2 me-3 shadow-sm">
