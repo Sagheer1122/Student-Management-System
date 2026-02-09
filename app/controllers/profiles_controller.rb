@@ -4,7 +4,6 @@ class ProfilesController < ApplicationController
   def show
     @user = current_user
     if @user.admin?
-      @total_users = User.count
       @total_students = Student.count
       @active_students = Student.where(status: "Active").count
       @inactive_students = Student.where(status: "Inactive").count
