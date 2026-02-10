@@ -5,5 +5,5 @@ import * as bootstrap from "bootstrap"
 window.bootstrap = bootstrap
 
 document.addEventListener('turbo:load', function () {
-  // Any other initialization can go here
+ 
 });
