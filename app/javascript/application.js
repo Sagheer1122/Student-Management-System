@@ -5,19 +5,5 @@ import * as bootstrap from "bootstrap"
 window.bootstrap = bootstrap
 
 document.addEventListener('turbo:load', function () {
-  console.log("Turbo load: managing toasts");
-  const toastElements = document.querySelectorAll('.toast');
-
-  toastElements.forEach(function (toastElement) {
-    toastElement.classList.add('show');
-
-    setTimeout(() => {
-      console.log("Fading out toast...");
-      toastElement.classList.remove('show');
-
-      setTimeout(() => {
-        toastElement.style.display = 'none';
-      }, 500);
-    }, 2000);
-  });
+  // Any other initialization can go here
 });
